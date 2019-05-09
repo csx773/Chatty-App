@@ -31,6 +31,7 @@ class App extends Component {
     };
     this.updateMessageList = this.updateMessageList.bind(this);
     this.addNewMessage = this.addNewMessage.bind(this);
+    this.updateName = this.updateName.bind(this);
 
   }
 
@@ -73,12 +74,17 @@ class App extends Component {
     console.warn(newMsg);
 
     //NOTE: all data send to WS server must be in string/JSON string 
-    //console.log(this.state);
     this.state.socket.send(JSON.stringify(newMsg));
   }
 
-  
+  updateName(newName){
+    // console.log('INSIDE APP updateName()')
+    // console.log(newName);
+    const tempName = {currentUser: { name: newName }}
+    this.setState(tempName);
+  }
 
+  
   render() {
     return (
       <div>
@@ -87,6 +93,7 @@ class App extends Component {
         <ChatBar
           currentUser={this.state.currentUser.name}
           addNewMessage={this.addNewMessage}
+          updateName={this.updateName}
         />
       </div>
     );
