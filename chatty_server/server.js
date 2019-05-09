@@ -40,27 +40,49 @@ wss.on('connection', (ws) => {
     console.log('WS Got new message!')
     let UID = uuidv4();
     const parsedMessage = JSON.parse(message)
+    //new filter for POST message and notification
     if (parsedMessage.type === 'postMessage'){
-      let sendMessageData = {
-          id: UID, 
-          content: parsedMessage.content,
-          username: parsedMessage.username,
-          type: 'incomingMessage'
-      }
-      console.log(sendMessageData)
-      wss.broadcast(JSON.stringify(sendMessageData));
-    } else if (parsedMessage.type === 'postNotification' ){
-      let sendMessageData = {
-        id: UID, 
-        username: parsedMessage.username,
-        previousName: parsedMessage.previousName,
-        type: 'incomingNotification'
-      }
-      console.log(sendMessageData)
-      wss.broadcast(JSON.stringify(sendMessageData));
+      var newType = 'incomingMessage'
+    }
+    else if (parsedMessage.type === 'postNotification' ){
+      var newType = 'incomingNotification'
     } else {
       console.warn('ERROR on data type:',parsedMessage.type )
     }
+
+    let sendData = {
+      id: UID, 
+      content: parsedMessage.content,
+      username: parsedMessage.username,
+      previousName: parsedMessage.previousName,
+      type: newType
+    }
+    console.log(sendData)
+    wss.broadcast(JSON.stringify(sendData));
+
+
+    /// end of new code
+    // if (parsedMessage.type === 'postMessage'){
+    //   let sendMessageData = {
+    //       id: UID, 
+    //       content: parsedMessage.content,
+    //       username: parsedMessage.username,
+    //       type: 'incomingMessage'
+    //   }
+    //   console.log(sendMessageData)
+    //   wss.broadcast(JSON.stringify(sendMessageData));
+    // } else if (parsedMessage.type === 'postNotification' ){
+    //   let sendMessageData = {
+    //     id: UID, 
+    //     username: parsedMessage.username,
+    //     previousName: parsedMessage.previousName,
+    //     type: 'incomingNotification'
+    //   }
+    //   console.log(sendMessageData)
+    //   wss.broadcast(JSON.stringify(sendMessageData));
+    // } else {
+    //   console.warn('ERROR on data type:',parsedMessage.type )
+    // }
 
 
   });
