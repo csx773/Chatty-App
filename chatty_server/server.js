@@ -47,6 +47,17 @@ wss.on('connection', (ws) => {
   console.log(currentClients)
   wss.broadcast(JSON.stringify(currentClients));
 
+  //for assigning random color string to user name
+  const colors = ["#C7E62E", "#397ABB", "#51547C", "#DA4D19", "#2EE6BA", "#FE2018", "#FE18D0", "#1827FE"];
+  var userColor = colors[Math.floor(Math.random()*colors.length)];
+  const colorObj = {
+    type: 'color',
+    color: userColor
+  }
+  wss.broadcast(JSON.stringify(colorObj))
+  
+
+
   //handling incoming messages
   ws.on('message', function incoming(message) {
     console.log('WS Got new message!')
@@ -67,7 +78,8 @@ wss.on('connection', (ws) => {
       content: parsedMessage.content,
       username: parsedMessage.username,
       previousName: parsedMessage.previousName,
-      type: newType
+      type: newType, 
+      color: parsedMessage.color
     }
     console.log(sendData)
     wss.broadcast(JSON.stringify(sendData));

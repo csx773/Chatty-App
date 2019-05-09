@@ -6,11 +6,14 @@ class Message extends Component {
     //start of new code
     const incomingData = this.props.message;
     const dataType = incomingData.type;
+    const userColor = this.props.message.color;
+    const colorStyle = {color: userColor}
+
     console.log(`<Message> Incoming data type is: ${dataType}`)
 
     let displayContent = (dataType === 'incomingMessage') ?
       <div className="message">
-        <span className="message-username">{incomingData.username}</span>
+        <span className="message-username" style={colorStyle}> {incomingData.username} </span>
         <span className="message-content">
           {incomingData.content}
         </span>

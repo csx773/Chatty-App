@@ -11,7 +11,8 @@ class App extends Component {
       currentUser: {name: "Anonymous"},
       messages: [], // messages coming from the server will be stored here as they arrive
       socket: {},
-      clientCounter: 0
+      clientCounter: 0,
+      color: ''
     };
     this.updateMessageList = this.updateMessageList.bind(this);
     this.addNewMessage = this.addNewMessage.bind(this);
@@ -49,6 +50,7 @@ class App extends Component {
         case "incomingNotification":
           // handle incoming notification
           console.log('SWITCH case type: incomingNotification')
+          //this.setState({currentUser: {color: parsedMsg.color, name: parsedMsg.username}});
           this.updateMessageList(parsedMsg);
           break;
 
@@ -57,6 +59,13 @@ class App extends Component {
           console.log('SWITCH case type: counter')
           let currentClients = parsedMsg.connectedClients;
           this.setState({clientCounter: currentClients})
+          break;
+
+        case "color":
+          if (this.state.color === '' && parsedMsg.color)
+            this.setState({color: parsedMsg.color });
+          break;
+
 
         default:
           // show an error in the console if the message type is unknown
@@ -70,7 +79,7 @@ class App extends Component {
   //update message list with incoming WS message
   updateMessageList(message) {
     console.log('<APP> updateMessageList ')
-    // console.log(message)
+    console.log(message)
     const oldMessage = this.state.messages;
     const newMessage = [...oldMessage, message];
     this.setState({ messages: newMessage });
@@ -81,8 +90,8 @@ class App extends Component {
   addNewMessage(newMsg) {
     console.log("INSIDE addNewMessage() <App />");
     console.warn(newMsg);
-
-    //NOTE: all data send to WS server must be in string/JSON string 
+    //add color style to the msg for every msg independantly
+    newMsg.color = this.state.color;
     this.state.socket.send(JSON.stringify(newMsg));
   }
 
@@ -102,7 +111,10 @@ class App extends Component {
         <Navbar 
           clientCounter={this.state.clientCounter}
         />
-        <MessageList messages={this.state.messages} />
+        <MessageList 
+          messages={this.state.messages} 
+          //color={this.state.color}
+        />
         <ChatBar
           currentUser={this.state.currentUser.name}
           addNewMessage={this.addNewMessage}
