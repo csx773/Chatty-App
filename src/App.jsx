@@ -41,22 +41,14 @@ class App extends Component {
       switch(parsedMsg.type) {
         case "incomingMessage":
         // handle incoming incomingData
+          console.log('SWITCH case type: incomingMessage')
           this.updateMessageList(parsedMsg);        
           break;
 
         case "incomingNotification":
           // handle incoming notification
           console.log('SWITCH case type: incomingNotification')
-          let nameChangeNotifcation = parsedMsg.username;
-          console.log(nameChangeNotifcation)
-          let notification = {
-            content: `${parsedMsg.previousName} have chnaged name to ${nameChangeNotifcation}`,
-            username: null,
-            type: 'incomingNotification'
-          }
-          console.log(notification)
-          this.updateMessageList(notification);
-
+          this.updateMessageList(parsedMsg);
           break;
 
         default:
