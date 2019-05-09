@@ -10,7 +10,8 @@ class App extends Component {
     this.state = {
       currentUser: {name: "Anonymous"},
       messages: [], // messages coming from the server will be stored here as they arrive
-      socket: {}
+      socket: {},
+      clientCounter: 0
     };
     this.updateMessageList = this.updateMessageList.bind(this);
     this.addNewMessage = this.addNewMessage.bind(this);
@@ -50,6 +51,12 @@ class App extends Component {
           console.log('SWITCH case type: incomingNotification')
           this.updateMessageList(parsedMsg);
           break;
+
+        case "counter":
+          // handle live connected clients
+          console.log('SWITCH case type: counter')
+          let currentClients = parsedMsg.connectedClients;
+          this.setState({clientCounter: currentClients})
 
         default:
           // show an error in the console if the message type is unknown
@@ -92,7 +99,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <Navbar 
+          clientCounter={this.state.clientCounter}
+        />
         <MessageList messages={this.state.messages} />
         <ChatBar
           currentUser={this.state.currentUser.name}

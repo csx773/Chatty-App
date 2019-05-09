@@ -34,6 +34,18 @@ wss.broadcast = function broadcast(data) {
 // the ws parameter in the callback.
 wss.on('connection', (ws) => {
   console.log('New client connected');
+  
+  //find number of connected client
+  let numClients = wss.clients.size
+  console.log(`Number of connected clients are ${numClients}`)
+
+  let currentClients = {
+    id: uuidv4(),
+    type: 'counter',
+    connectedClients: numClients
+  }
+  console.log(currentClients)
+  wss.broadcast(JSON.stringify(currentClients));
 
   //handling incoming messages
   ws.on('message', function incoming(message) {
@@ -60,33 +72,19 @@ wss.on('connection', (ws) => {
     console.log(sendData)
     wss.broadcast(JSON.stringify(sendData));
 
-
     /// end of new code
-    // if (parsedMessage.type === 'postMessage'){
-    //   let sendMessageData = {
-    //       id: UID, 
-    //       content: parsedMessage.content,
-    //       username: parsedMessage.username,
-    //       type: 'incomingMessage'
-    //   }
-    //   console.log(sendMessageData)
-    //   wss.broadcast(JSON.stringify(sendMessageData));
-    // } else if (parsedMessage.type === 'postNotification' ){
-    //   let sendMessageData = {
-    //     id: UID, 
-    //     username: parsedMessage.username,
-    //     previousName: parsedMessage.previousName,
-    //     type: 'incomingNotification'
-    //   }
-    //   console.log(sendMessageData)
-    //   wss.broadcast(JSON.stringify(sendMessageData));
-    // } else {
-    //   console.warn('ERROR on data type:',parsedMessage.type )
-    // }
-
-
   });
 
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on('close', () => console.log('Client disconnected'));
+  ws.on('close', () => {
+    console.log('Client disconnected')
+    
+    let currentClients = {
+      id: uuidv4(),
+      type: 'counter',
+      connectedClients: wss.clients.size
+    }
+    console.log(currentClients)
+    wss.broadcast(JSON.stringify(currentClients));
+  });
 });
