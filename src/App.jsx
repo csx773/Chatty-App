@@ -4,23 +4,6 @@ import Navbar from './Navbar.jsx';
 import MessageList from './MessageList.jsx';
 
 
-const tempData = {
-  currentUser: { name: 'Bob' }, // optional. if currentUser is not defined, it means the user is Anonymous
-  messages: [
-    {
-      id: Math.random().toString().substr(2, 7),
-      username: 'Bob',
-      content: 'Has anyone seen my marbles?'
-    },
-    {
-      id: Math.random().toString().substr(2, 7),
-      username: 'Anonymous',
-      content:
-        'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
-    }
-  ]
-};
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -47,12 +30,39 @@ class App extends Component {
     }
     
     //when recieving new message from WS server
-    socket.onmessage = (message) => {
-      console.log('<App> recieved new message from WS server')
-      console.log( JSON.parse(message.data))
-      const parsedMsg = JSON.parse(message.data)
-      console.log(this.updateMessageList)
-      this.updateMessageList(parsedMsg);
+    socket.onmessage = (incomingData) => {
+      console.log('<App> recieved new incomingData from WS server')
+      console.log( JSON.parse(incomingData.data))
+      
+      // The socket event data is encoded as a JSON string.
+      // This line turns it into an object
+      const parsedMsg = JSON.parse(incomingData.data)
+      
+      switch(parsedMsg.type) {
+        case "incomingMessage":
+        // handle incoming incomingData
+          this.updateMessageList(parsedMsg);        
+          break;
+
+        case "incomingNotification":
+          // handle incoming notification
+          console.log('SWITCH case type: incomingNotification')
+          let nameChangeNotifcation = parsedMsg.username;
+          console.log(nameChangeNotifcation)
+          let notification = {
+            content: `${parsedMsg.previousName} have chnaged name to ${nameChangeNotifcation}`,
+            username: null,
+            type: 'incomingNotification'
+          }
+          console.log(notification)
+          this.updateMessageList(notification);
+
+          break;
+
+        default:
+          // show an error in the console if the message type is unknown
+          throw new Error("Unknown event type " + data.type);
+      }
     }
   
     this.setState({socket: socket})
@@ -78,10 +88,12 @@ class App extends Component {
   }
 
   updateName(newName){
-    // console.log('INSIDE APP updateName()')
-    // console.log(newName);
-    const tempName = {currentUser: { name: newName }}
+    console.log('INSIDE APP updateName()')
+    console.log(newName);
+    const tempName = {currentUser: { name: newName.username }}
     this.setState(tempName);
+    //send to WS server for postNotification
+    this.state.socket.send(JSON.stringify(newName));
   }
 
   

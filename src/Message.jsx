@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 class Message extends Component {
   render() {
     const singleMsg = this.props.message;
-    const {content, username} = singleMsg;
+    const {content, username, type} = singleMsg;
+    console.log(`Incoming message type is: ${type}`)
     return (
       <main className="messages">
         <div className="message">
@@ -12,8 +13,8 @@ class Message extends Component {
             {content}
           </span>
         </div>
-        <div className="message system">
-          Testing message system
+        <div className="message system"> 
+          System message here
         </div>
       </main>
     );

@@ -40,14 +40,28 @@ wss.on('connection', (ws) => {
     console.log('WS Got new message!')
     let UID = uuidv4();
     const parsedMessage = JSON.parse(message)
-
-    let sendMessageData = {
+    if (parsedMessage.type === 'postMessage'){
+      let sendMessageData = {
+          id: UID, 
+          content: parsedMessage.content,
+          username: parsedMessage.username,
+          type: 'incomingMessage'
+      }
+      console.log(sendMessageData)
+      wss.broadcast(JSON.stringify(sendMessageData));
+    } else if (parsedMessage.type === 'postNotification' ){
+      let sendMessageData = {
         id: UID, 
-        content: parsedMessage.content,
-        username: parsedMessage.username
+        username: parsedMessage.username,
+        previousName: parsedMessage.previousName,
+        type: 'incomingNotification'
+      }
+      console.log(sendMessageData)
+      wss.broadcast(JSON.stringify(sendMessageData));
+    } else {
+      console.warn('ERROR on data type:',parsedMessage.type )
     }
-    console.log(sendMessageData)
-    wss.broadcast(JSON.stringify(sendMessageData));
+
 
   });
 
