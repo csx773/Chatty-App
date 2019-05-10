@@ -1,24 +1,23 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 
 class Message extends Component {
   render() {
    
-    //start of new code
+    // Setting variable to use 
     let incomingData = this.props.message;
     const dataType = incomingData.type;
     const userColor = this.props.message.color;
     const colorStyle = {color: userColor}
 
-    //start of feature-image
+    // Testing if incomingData contains an image URL
     const regex = /^((https?|ftp):)?\/\/.*(jpeg|jpg|png|gif|bmp)$/;
     let isImage = incomingData.content
-    console.warn(isImage);
+    // Error checking to filter out incomingNotification
     if(isImage != undefined){
-      isImage = isImage.search(regex);
-      console.warn(`Result of isImage is: ${isImage}`);
-  
+      isImage = isImage.search(regex);  
       if (isImage != -1){
-        console.log('Message is an image, now packing into img container')
+        // IncomingData contains image URL, now packing into container and render to page
         return (
           <div className="message">
             <span className="message-username" style={colorStyle}> {incomingData.username} </span>
@@ -31,10 +30,8 @@ class Message extends Component {
         )
       }
     }
-    // end of feature-image
 
-    console.log(`<Message> Incoming data type is: ${dataType}`)
-
+    // Filter incomingData by type and render to page
     let displayContent = (dataType === 'incomingMessage') ?
       <div className="message">
         <span className="message-username" style={colorStyle}> {incomingData.username} </span>
@@ -50,7 +47,6 @@ class Message extends Component {
       </div>
     ;
 
-    //end of new code
     return (
       <main className="messages">
         {displayContent}

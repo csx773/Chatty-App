@@ -1,4 +1,3 @@
-// server.js
 
 const express = require('express');
 const SocketServer = require('ws').Server;
@@ -44,7 +43,6 @@ wss.on('connection', (ws) => {
     type: 'counter',
     connectedClients: numClients
   }
-  console.log(currentClients)
   wss.broadcast(JSON.stringify(currentClients));
 
   //for assigning random color string to user name
@@ -81,7 +79,6 @@ wss.on('connection', (ws) => {
       type: newType, 
       color: parsedMessage.color
     }
-    console.log(sendData)
     wss.broadcast(JSON.stringify(sendData));
 
     /// end of new code
@@ -96,7 +93,6 @@ wss.on('connection', (ws) => {
       type: 'counter',
       connectedClients: wss.clients.size
     }
-    console.log(currentClients)
     wss.broadcast(JSON.stringify(currentClients));
   });
 });
