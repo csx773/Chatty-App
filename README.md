@@ -1,4 +1,4 @@
-#Chatty App
+# Chatty App
 =====================
 
 Chatty App allows multiple user to connect to a chat room and talk to everyone in the room. New messages are pushed to all connected clients. Users are able to send text messages and variety of image URL links (supports .jpg, .jpeg, .png, .gif)
@@ -23,12 +23,11 @@ Chatty App was built using React, WS, and Webpack and HTML/SCSS
 
 ## Screenshots
 
-!["Front page"](https://github.com/csx773/tweeter/blob/master/screenshots/mouse-over.png)
-!["New Tweet"](https://github.com/csx773/tweeter/blob/master/screenshots/new-tweet.png)
+!["Chat with pictures"](https://github.com/csx773/react-simple-boilerplate/blob/master/build/screenshots/screenshot-movie.png)
+!["Home page"](https://github.com/csx773/react-simple-boilerplate/blob/master/build/screenshots/screenshot-chat.png)
+!["New user"](https://github.com/csx773/react-simple-boilerplate/blob/master/build/screenshots/screenshot-1.png)
 
-Home page
-Multiple users online
-Sending texts and pictures
+
 
 ### Dependencies
 
