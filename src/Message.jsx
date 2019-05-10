@@ -4,11 +4,25 @@ class Message extends Component {
   render() {
    
     //start of new code
-    const incomingData = this.props.message;
+    let incomingData = this.props.message;
     const dataType = incomingData.type;
     const userColor = this.props.message.color;
     const colorStyle = {color: userColor}
 
+    //start of feature-image
+    const regex = /^((https?|ftp):)?\/\/.*(jpeg|jpg|png|gif|bmp)$/;
+    let isImage = incomingData.content
+    console.warn(isImage);
+    isImage = isImage.search(regex);
+    console.warn(`Result of isImage is: ${isImage}`);
+
+    if (isImage != -1){
+      console.log('Message is an image, now packing into img container')
+      return <div className='image-container'> <img src={incomingData.content} alt="message-image" width="80%"/></div>
+    }
+
+
+    // end of feature-image
     console.log(`<Message> Incoming data type is: ${dataType}`)
 
     let displayContent = (dataType === 'incomingMessage') ?
