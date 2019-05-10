@@ -1,41 +1,34 @@
-React Boilerplate
+#Chatty App
 =====================
 
-A minimal and light dev environment for ReactJS.
+Chatty App allows multiple user to connect to a chat room and talk to everyone in the room. New messages are pushed to all connected clients. Users are able to send text messages and variety of image URL links (supports .jpg, .jpeg, .png, .gif)
 
-### Usage
+Chatty App was built using React, WS, and Webpack and HTML/SCSS
 
-Clone the boilerplate and create your own git repo.
+## Getting Started
 
-```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
-cd react-simple-boilerplate
-git remote rm origin
-git remote add origin [YOUR NEW REPOSITORY]
-# Manually update your package.json file
-```
+1. Fork this repository, then clone to your own local machine.
+2. Install dependencies using the `npm install` command.
+3. Change to `chatty_server` folder within in the main directory
+4. Install dependencies in `chatty_server` folder using `npm install` command.
+5. Start server from  `chatty_server` folder using `npm start` command.
+6. Change back to root directory folder and start client side code using `npm start` command.   
+7. The app will be running in browser at <http://localhost:3000/>
 
-Install the dependencies and start the server.
+## Features
+1. Each new user can choose to be an anonymous name or use own name
+2. Random colors will be assigned to each new user in the chatroom
+3. Header shows current number of users in chatroom
+4. Can share images (supports .jpg, .jpeg, .png, .gif) using URL links 
 
-```
-npm install
-npm start
-open http://localhost:3000
-```
+## Screenshots
 
-### Static Files
+!["Front page"](https://github.com/csx773/tweeter/blob/master/screenshots/mouse-over.png)
+!["New Tweet"](https://github.com/csx773/tweeter/blob/master/screenshots/new-tweet.png)
 
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
-
-### Linting
-
-This boilerplate project includes React ESLint configuration.
-
-```
-npm run lint
-```
+Home page
+Multiple users online
+Sending texts and pictures
 
 ### Dependencies
 
