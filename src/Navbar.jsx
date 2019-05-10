@@ -11,6 +11,7 @@ class Navbar extends Component {
     return (
       <nav className="navbar">
         <a href="/" className="navbar-brand">
+          <img src='http://localhost:3000/build/logo.png' alt="Chatty Logo" width="45px" height="45px" />
           Chatty
         </a>
         <div className='navcounter' >

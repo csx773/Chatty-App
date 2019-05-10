@@ -14,7 +14,7 @@ body {
 }
 
 .chatbar {
-  background: tomato;
+  background: rgb(26, 187, 216);
   border-top: 1px solid black;
   bottom: 0;
   display: flex;
@@ -26,7 +26,8 @@ body {
 
 .chatbar-message,
 .chatbar-username {
-  border: 1px solid black;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 5px;
   display: block;
   height: 40px;
   line-height: 40px;
@@ -69,7 +70,7 @@ body {
 }
 
 .navbar {
-  background: tomato;
+  background: rgb(26, 187, 216);
   border-bottom: 1px solid black;
   height: 60px;
   left: 0;
@@ -96,4 +97,5 @@ body {
   float: right;
   font-size: 20px;
   padding-top: 18px;
+  color: rgb(7, 66, 7);
 }
