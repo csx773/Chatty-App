@@ -48,7 +48,7 @@ wss.on('connection', (ws) => {
   wss.broadcast(JSON.stringify(currentClients));
 
   //for assigning random color string to user name
-  const colors = ["#C7E62E", "#397ABB", "#51547C", "#DA4D19", "#2EE6BA", "#FE2018", "#FE18D0", "#1827FE"];
+  const colors = ["#C7E62E", "#397ABB", "#51547C", "#802505", "#2EE6BA", "#FE2018", "#FE18D0", "#1827FE"];
   var userColor = colors[Math.floor(Math.random()*colors.length)];
   const colorObj = {
     type: 'color',
